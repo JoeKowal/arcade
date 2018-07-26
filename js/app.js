@@ -1,3 +1,7 @@
+//init
+
+
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -24,6 +28,40 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+
+class Runner {
+    constructor() {
+        this.climb = 83;
+        this.move = 101;
+        this.xStart = this.move -101;
+        this.yStart = (this.climb * 5) -10;
+        this.x = this.xStart;
+        this.y = this.yStart;
+        this.sprite = 'images/char-princess-girl.png'
+    }
+    //screen draw runner
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+    //input keys dictate position of player
+   
+
+    handleInput(input){
+        switch(input){
+            case 'up': this.y -= this.jump;
+            break;
+            case 'down': this.y += this.jump;
+            break;
+            case 'left': this.x -= this.move;
+            break;
+            case 'right': this.x += this.move;
+            break;
+        }
+    }
+}
+
+//player is Runner
+const player = new Runner();
 
 
 // Now instantiate your objects.
