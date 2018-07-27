@@ -60,7 +60,7 @@ class Runner {
   handleInput(input) {
     switch (input) {
       case "up":
-        if (this.y > this.climb) {
+        if (this.y > 0) {
           this.y -= this.climb;
         }
         break;
