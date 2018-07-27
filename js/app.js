@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-var Enemy = function(x,y,speed) {
+var Enemy = function(x, y, speed) {
   this.x = x;
   this.y = y + 61; //center in row
   this.speed = speed;
@@ -15,7 +15,7 @@ const badguy4 = new Enemy(-303, 170, 450);
 const badguy5 = new Enemy(-303, 0, 450);
 const badguy6 = new Enemy(-303, 85, 400);
 const allEnemies = [];
-allEnemies.push(badguy1,badguy2,badguy3,badguy4,badguy5,badguy6);
+allEnemies.push(badguy1, badguy2, badguy3, badguy4, badguy5, badguy6);
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -23,12 +23,11 @@ Enemy.prototype.update = function(dt) {
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
-  if(this.x < this.move * 5) {
-      this.x += this.speed * dt;
-  }
-  else {
-      //enemy back to start of screen
-      this.x = -101;
+  if (this.x < this.move * 5) {
+    this.x += this.speed * dt;
+  } else {
+    //enemy back to start of screen
+    this.x = -101;
   }
 };
 
@@ -46,17 +45,30 @@ class Runner {
     this.climb = 83;
     this.move = 101;
     this.xStart = this.move - 101;
-    this.yStart = this.climb * 5 - 10;
+    this.yStart = (this.climb * 4) + 61;
     this.x = this.xStart;
     this.y = this.yStart;
     this.sprite = "images/char-princess-girl.png";
   }
+
   //screen draw runner
   render() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
-  //input keys dictate position of player
 
+  //check for impact!
+  update() {
+    for (let enemy of allEnemies) {
+      if (
+        this.y === enemy.y &&
+        (enemy.x + enemy.move > this.x && enemy.x < this.x + this.move)
+      ) {
+        console.log(this.y, enemy.y);
+      }
+    }
+  }
+
+  //input keys dictate position of player
   handleInput(input) {
     switch (input) {
       case "up":
@@ -85,8 +97,6 @@ class Runner {
 
 //player is Runner
 const player = new Runner();
-
-
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
