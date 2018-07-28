@@ -8,10 +8,10 @@ var Enemy = function(x, y, speed) {
 };
 
 //badguy is Enemy
-const badguy1 = new Enemy(-101, 0, 450);
-const badguy2 = new Enemy(-101, 85, 400);
+const badguy1 = new Enemy(-101, 0, 500);
+const badguy2 = new Enemy(-101, 85, 500);
 const badguy3 = new Enemy(-101, 170, 450);
-const badguy4 = new Enemy(-303, 170, 450);
+const badguy4 = new Enemy(-303, 170, 500);
 const badguy5 = new Enemy(-303, 0, 450);
 const badguy6 = new Enemy(-303, 85, 400);
 const allEnemies = [];
@@ -42,10 +42,10 @@ Enemy.prototype.render = function() {
 
 class Runner {
   constructor() {
-    this.climb = 83;
+    this.climb = 85;
     this.move = 101;
     this.xStart = this.move - 101;
-    this.yStart = (this.climb * 4) + 61;
+    this.yStart = this.climb * 4 + 61;
     this.x = this.xStart;
     this.y = this.yStart;
     this.sprite = "images/char-princess-girl.png";
@@ -57,16 +57,16 @@ class Runner {
   }
 
   //check for impact!
-  update() {
-    for (let enemy of allEnemies) {
-      if (
-        this.y === enemy.y &&
-        (enemy.x + enemy.move > this.x && enemy.x < this.x + this.move)
-      ) {
-        console.log(this.y, enemy.y);
-      }
+update() {
+  for (let enemy of allEnemies) {
+    if (
+      this.y === enemy.y &&
+      (enemy.x + enemy.move/1.8 > this.x && enemy.x < this.x + this.move/1.8)
+    ) {
+      alert('smash');
     }
   }
+}
 
   //input keys dictate position of player
   handleInput(input) {
