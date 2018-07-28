@@ -7,14 +7,16 @@ var Enemy = function(x, y, speed) {
   this.move = 101;
 };
 
-//badguy is Enemy
-const badguy1 = new Enemy(-101, 0, 500);
+//badguy is Enemy - create enemeies, their starting positions, and their speeds
+const badguy1 = new Enemy(-101, 0, 555);
 const badguy2 = new Enemy(-101, 85, 500);
 const badguy3 = new Enemy(-101, 170, 450);
-const badguy4 = new Enemy(-303, 170, 500);
+const badguy4 = new Enemy(-303, 170, 480);
 const badguy5 = new Enemy(-303, 0, 450);
 const badguy6 = new Enemy(-303, 85, 400);
+//array to hold bad guys
 const allEnemies = [];
+//put bad guys in their array
 allEnemies.push(badguy1, badguy2, badguy3, badguy4, badguy5, badguy6);
 
 // Update the enemy's position, required method for game
@@ -40,6 +42,7 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
+//player attributes - define move size, starting position, and character image
 class Runner {
   constructor() {
     this.climb = 85;
@@ -48,6 +51,7 @@ class Runner {
     this.yStart = this.climb * 4 + 61;
     this.x = this.xStart;
     this.y = this.yStart;
+    this.won = false;
     this.sprite = "images/char-princess-girl.png";
   }
 
@@ -56,19 +60,34 @@ class Runner {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 
+  //start over after impact with bad guy
+  startOver() {
+    this.y = this.yStart;
+    this.x = this.xStart;
+  }
+
   //check for impact!
-update() {
-  for (let enemy of allEnemies) {
-    if (
-      this.y === enemy.y &&
-      (enemy.x + enemy.move/1.8 > this.x && enemy.x < this.x + this.move/1.8)
-    ) {
-      alert('smash');
+  update() {
+    for (let enemy of allEnemies) {
+      if (
+        this.y === enemy.y &&
+        (enemy.x + enemy.move / 1.8 > this.x &&
+          enemy.x < this.x + this.move / 1.8)
+      ) {
+        this.startOver(); //impact - start over!
+      }
+    }
+    //did the runner win?
+    if (this.y === -24) {
+      this.won = true;
+      if ((this.won = true)) {
+        $('#winmodal').modal('show');
+        //alert("You Won -- Great Job!");
+      }
     }
   }
-}
 
-  //input keys dictate position of player
+  //input keys dictate movement direction of player
   handleInput(input) {
     switch (input) {
       case "up":
